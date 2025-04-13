@@ -6,6 +6,7 @@ from selenium.webdriver.support import expected_conditions
 #import time
 
 wait_timer = 20
+webpage = 'https://stellarburgers.nomoreparties.site/'
 authorized_name = "KirillFedorov19_000@yandex.ru"
 authorized_password = "108108108"
 
@@ -14,7 +15,6 @@ def driver():
     chrome_options = webdriver.ChromeOptions()
     # chrome_options.add_argument('--headless')
     driver = webdriver.Chrome(options=chrome_options)
-    webpage = 'https://stellarburgers.nomoreparties.site/'
     driver.get(webpage)
     WebDriverWait(driver, wait_timer).until(expected_conditions.visibility_of_element_located((By.XPATH, ".//a[@href='/account']")))
     return driver
