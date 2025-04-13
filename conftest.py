@@ -26,5 +26,5 @@ def authorized_driver(driver):
     driver.find_element(By.XPATH, ".//input[@name='name']").send_keys(authorized_name)
     driver.find_element(By.XPATH, ".//input[@name='Пароль']").send_keys(authorized_password)
     driver.find_element(By.XPATH, ".//button[@class='button_button__33qZ0 button_button_type_primary__1O7Bx button_button_size_medium__3zxIa']").click()
-    WebDriverWait(driver, wait_timer).until(expected_conditions.visibility_of_element_located((By.XPATH, ".//button[@class='button_button__33qZ0 button_button_type_primary__1O7Bx button_button_size_large__G21Vg']")))
+    WebDriverWait(driver, wait_timer).until(expected_conditions.visibility_of_element_located((By.XPATH, ".//h1[@class='text text_type_main-large mb-5 mt-10']")))
     return driver
