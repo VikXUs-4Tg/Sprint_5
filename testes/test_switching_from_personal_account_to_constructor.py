@@ -5,18 +5,18 @@ from selenium.webdriver.support import expected_conditions
 
 class TestTransferToConstructor:
 
-    def test_transfer_to_constructor_from_personal_account_bu_click_logo(self, authorized_driver, wait_timer):
-        authorized_driver.find_element(By.XPATH, ".//a[@href='/account']").click()
-        WebDriverWait(authorized_driver, wait_timer).until(expected_conditions.visibility_of_element_located((By.XPATH, ".//p[@class='Account_text__fZAIn text text_type_main-default']")))
-        authorized_driver.find_element(By.XPATH, ".//div[@class='AppHeader_header__logo__2D0X2']").click()
-        WebDriverWait(authorized_driver, wait_timer).until(expected_conditions.visibility_of_element_located((By.XPATH,".//h1[@class='text text_type_main-large mb-5 mt-10']")))
-        assert authorized_driver.find_element(By.XPATH, ".//h1[@class='text text_type_main-large mb-5 mt-10']").get_attribute('innerText') == "Соберите бургер"
+    def test_transfer_to_constructor_from_personal_account_bu_click_logo(self, authorized_driver, wait_timer, button_pass_from_constructor_window_to_personal_account,title_assemble_the_burger_in_constructor, title_info_personal_account, logo_in_header):
+        authorized_driver.find_element(By.XPATH, button_pass_from_constructor_window_to_personal_account).click()
+        WebDriverWait(authorized_driver, wait_timer).until(expected_conditions.visibility_of_element_located((By.XPATH, title_info_personal_account)))
+        authorized_driver.find_element(By.XPATH, logo_in_header).click()
+        WebDriverWait(authorized_driver, wait_timer).until(expected_conditions.visibility_of_element_located((By.XPATH,title_assemble_the_burger_in_constructor)))
+        assert authorized_driver.find_element(By.XPATH, title_assemble_the_burger_in_constructor).get_attribute('innerText') == "Соберите бургер"
         authorized_driver.quit()
 
-    def test_transfer_to_constructor_from_personal_account_bu_click_button_constructor(self, authorized_driver, wait_timer):
-        authorized_driver.find_element(By.XPATH, ".//a[@href='/account']").click()
-        WebDriverWait(authorized_driver, wait_timer).until(expected_conditions.visibility_of_element_located((By.XPATH, ".//p[@class='Account_text__fZAIn text text_type_main-default']")))
-        authorized_driver.find_element(By.XPATH,".//p[contains(text(), 'Конструктор')]").click()
-        WebDriverWait(authorized_driver, wait_timer).until(expected_conditions.visibility_of_element_located((By.XPATH,".//h1[@class='text text_type_main-large mb-5 mt-10']")))
-        assert authorized_driver.find_element(By.XPATH, ".//h1[@class='text text_type_main-large mb-5 mt-10']").get_attribute('innerText') == "Соберите бургер"
+    def test_transfer_to_constructor_from_personal_account_bu_click_button_constructor(self, authorized_driver, wait_timer, button_pass_from_constructor_window_to_personal_account, title_assemble_the_burger_in_constructor, title_info_personal_account, button_pass_to_constructor_in_header):
+        authorized_driver.find_element(By.XPATH, button_pass_from_constructor_window_to_personal_account).click()
+        WebDriverWait(authorized_driver, wait_timer).until(expected_conditions.visibility_of_element_located((By.XPATH, title_info_personal_account)))
+        authorized_driver.find_element(By.XPATH,button_pass_to_constructor_in_header).click()
+        WebDriverWait(authorized_driver, wait_timer).until(expected_conditions.visibility_of_element_located((By.XPATH,title_assemble_the_burger_in_constructor)))
+        assert authorized_driver.find_element(By.XPATH, title_assemble_the_burger_in_constructor).get_attribute('innerText') == "Соберите бургер"
         authorized_driver.quit()
