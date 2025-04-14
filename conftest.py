@@ -3,8 +3,8 @@ import random
 import string
 from selenium import webdriver
 from selenium.webdriver.common.by import By
-from selenium.webdriver.support.wait import WebDriverWait
-from selenium.webdriver.support import expected_conditions
+from selenium.webdriver.support.wait import WebDriverWait as WDW
+from selenium.webdriver.support import expected_conditions as EC
 
 
 webpage = 'https://stellarburgers.nomoreparties.site/'
@@ -120,17 +120,17 @@ def driver(wait_timer, title_assemble_the_burger_in_constructor):
     chrome_options.add_argument('--window-size=1024,768')
     driver = webdriver.Chrome(options=chrome_options)
     driver.get(webpage)
-    WebDriverWait(driver, wait_timer).until(expected_conditions.visibility_of_element_located((By.XPATH, title_assemble_the_burger_in_constructor)))
+    WDW(driver, wait_timer).until(EC.visibility_of_element_located((By.XPATH, title_assemble_the_burger_in_constructor)))
     return driver
 
 @pytest.fixture
 def authorized_driver(driver, wait_timer, authorized_name, authorized_password, button_to_personal_account_in_header, button_login_in_authorization_window, title_assemble_the_burger_in_constructor, field_for_entry_name, field_for_entry_password):
     driver.find_element(By.XPATH, button_to_personal_account_in_header).click()
-    WebDriverWait(driver, wait_timer).until(expected_conditions.visibility_of_element_located((By.XPATH, button_login_in_authorization_window)))
+    WDW(driver, wait_timer).until(EC.visibility_of_element_located((By.XPATH, button_login_in_authorization_window)))
     driver.find_element(By.XPATH, field_for_entry_name).send_keys(authorized_name)
     driver.find_element(By.XPATH, field_for_entry_password).send_keys(authorized_password)
     driver.find_element(By.XPATH, button_login_in_authorization_window).click()
-    WebDriverWait(driver, wait_timer).until(expected_conditions.visibility_of_element_located((By.XPATH, title_assemble_the_burger_in_constructor)))
+    WDW(driver, wait_timer).until(EC.visibility_of_element_located((By.XPATH, title_assemble_the_burger_in_constructor)))
     return driver
 
 @pytest.fixture(scope='function')
