@@ -1,66 +1,66 @@
-from selenium.webdriver.common.by import By
 from selenium.webdriver.support.wait import WebDriverWait as WDW
 from selenium.webdriver.support import expected_conditions as EC
-import time
+from locators import HeaderLocators as HL
+from locators import AuthorizationRegistrationAndPasswordRecoveryWindowsLocators as ARPRWL
+from locators import ConstructorLocators as CL
 
 
 class TestRegistration:
 
-    def test_registration_with_valid_data (self, driver, wait_timer, random_name, random_password, button_to_personal_account_in_header, field_for_entry_name, field_for_entry_password, button_login_in_authorization_window, title_assemble_the_burger_in_constructor, button_place_an_order_in_constructor, button_to_registration_in_authorization_window, button_of_registration_in_registration_window, logo_in_header):
-        driver.find_element(By.XPATH, button_to_personal_account_in_header).click()
-        WDW(driver, wait_timer).until(EC.visibility_of_element_located((By.XPATH, button_to_registration_in_authorization_window)))
-        driver.find_element(By.XPATH, button_to_registration_in_authorization_window).click()
-        WDW(driver, wait_timer).until(EC.visibility_of_element_located((By.XPATH, button_of_registration_in_registration_window)))
-        names=driver.find_elements(By.XPATH, field_for_entry_name)
+    def test_registration_with_valid_data (self, driver, wait_timer, random_name, random_password):
+        WDW(driver, wait_timer).until(EC.visibility_of_element_located(HL.BUTTON_TO_PERSONAL_ACCOUNT))
+        driver.find_element(*HL.BUTTON_TO_PERSONAL_ACCOUNT).click()
+        WDW(driver, wait_timer).until(EC.visibility_of_element_located(ARPRWL.BUTTON_PASS_TO_REGISTRATION))
+        driver.find_element(*ARPRWL.BUTTON_PASS_TO_REGISTRATION).click()
+        WDW(driver, wait_timer).until(EC.visibility_of_element_located(ARPRWL.BUTTON_TO_REGISTRATION))
+        names=driver.find_elements(*ARPRWL.FIELD_FOR_ENTRY_NAME)
         names[0].send_keys(random_name[:random_name.find('@')])
         names[1].send_keys(random_name)
-        driver.find_element(By.XPATH, field_for_entry_password).send_keys(random_password)
-        driver.find_element(By.XPATH, button_of_registration_in_registration_window).click()
-        time.sleep(1)
-        driver.find_element(By.XPATH, button_to_personal_account_in_header).click()
-        WDW(driver, wait_timer).until(EC.visibility_of_element_located((By.XPATH, button_login_in_authorization_window)))
-        driver.find_element(By.XPATH, field_for_entry_name).send_keys(random_name)
-        driver.find_element(By.XPATH, field_for_entry_password).send_keys(random_password)
-        driver.find_element(By.XPATH, button_login_in_authorization_window).click()
-        time.sleep(1)
-        driver.find_element(By.XPATH, logo_in_header).click()
-        WDW(driver, wait_timer).until(EC.visibility_of_element_located((By.XPATH, title_assemble_the_burger_in_constructor)))
-        assert driver.find_element(By.XPATH, button_place_an_order_in_constructor).get_attribute('innerText') == "Оформить заказ"
-        driver.quit()
+        driver.find_element(*ARPRWL.FIELD_FOR_ENTRY_PASSWORD).send_keys(random_password)
+        driver.find_element(*ARPRWL.BUTTON_TO_REGISTRATION).click()
+        WDW(driver, wait_timer).until(EC.visibility_of_element_located(HL.BUTTON_TO_PERSONAL_ACCOUNT))
+        driver.find_element(*HL.BUTTON_TO_PERSONAL_ACCOUNT).click()
+        WDW(driver, wait_timer).until(EC.visibility_of_element_located(ARPRWL.BUTTON_TO_LOGIN))
+        driver.find_element(*ARPRWL.FIELD_FOR_ENTRY_NAME).send_keys(random_name)
+        driver.find_element(*ARPRWL.FIELD_FOR_ENTRY_PASSWORD).send_keys(random_password)
+        driver.find_element(*ARPRWL.BUTTON_TO_LOGIN).click()
+        WDW(driver, wait_timer).until(EC.visibility_of_element_located(HL.LOGO))
+        driver.find_element(*HL.LOGO).click()
+        WDW(driver, wait_timer).until(EC.visibility_of_element_located(CL.TITLE_ASSEMBLE_THE_BURGER))
+        assert driver.find_element(*CL.BUTTON_PLACE_AN_ORDER).get_attribute('innerText') == "Оформить заказ"
 
-    def test_abort_registration_with_incorrect_password (self, driver, wait_timer, random_name, random_password, button_to_personal_account_in_header, field_for_entry_name, field_for_entry_password, button_login_in_authorization_window, title_assemble_the_burger_in_constructor, button_place_an_order_in_constructor, logo_in_header, button_to_registration_in_authorization_window, button_of_registration_in_registration_window):
-        driver.find_element(By.XPATH, button_to_personal_account_in_header).click()
-        WDW(driver, wait_timer).until(EC.visibility_of_element_located((By.XPATH, button_to_registration_in_authorization_window)))
-        driver.find_element(By.XPATH, button_to_registration_in_authorization_window).click()
-        WDW(driver, wait_timer).until(EC.visibility_of_element_located((By.XPATH, button_of_registration_in_registration_window)))
-        names=driver.find_elements(By.XPATH, field_for_entry_name)
+    def test_abort_registration_with_incorrect_password (self, driver, wait_timer, random_name, random_password):
+        WDW(driver, wait_timer).until(EC.visibility_of_element_located(HL.BUTTON_TO_PERSONAL_ACCOUNT))
+        driver.find_element(*HL.BUTTON_TO_PERSONAL_ACCOUNT).click()
+        WDW(driver, wait_timer).until(EC.visibility_of_element_located(ARPRWL.BUTTON_PASS_TO_REGISTRATION))
+        driver.find_element(*ARPRWL.BUTTON_PASS_TO_REGISTRATION).click()
+        WDW(driver, wait_timer).until(EC.visibility_of_element_located(ARPRWL.BUTTON_TO_REGISTRATION))
+        names = driver.find_elements(*ARPRWL.FIELD_FOR_ENTRY_NAME)
         names[0].send_keys(random_name[:random_name.find('@')])
         names[1].send_keys(random_name)
-        driver.find_element(By.XPATH, field_for_entry_password).send_keys(random_password[:5])
-        driver.find_element(By.XPATH, button_of_registration_in_registration_window).click()
-        time.sleep(1)
-        driver.find_element(By.XPATH, button_to_personal_account_in_header).click()
-        WDW(driver, wait_timer).until(EC.visibility_of_element_located((By.XPATH, button_login_in_authorization_window)))
-        driver.find_element(By.XPATH, field_for_entry_name).send_keys(random_name)
-        driver.find_element(By.XPATH, field_for_entry_password).send_keys(random_password[:5])
-        driver.find_element(By.XPATH, button_login_in_authorization_window).click()
-        time.sleep(1)
-        driver.find_element(By.XPATH, logo_in_header).click()
-        WDW(driver, wait_timer).until(EC.visibility_of_element_located((By.XPATH, title_assemble_the_burger_in_constructor)))
-        assert driver.find_element(By.XPATH, button_place_an_order_in_constructor).get_attribute('innerText') == "Войти в аккаунт"
-        driver.quit()
+        driver.find_element(*ARPRWL.FIELD_FOR_ENTRY_PASSWORD).send_keys(random_password[:5])
+        driver.find_element(*ARPRWL.BUTTON_TO_REGISTRATION).click()
+        WDW(driver, wait_timer).until(EC.visibility_of_element_located(HL.BUTTON_TO_PERSONAL_ACCOUNT))
+        driver.find_element(*HL.BUTTON_TO_PERSONAL_ACCOUNT).click()
+        WDW(driver, wait_timer).until(EC.visibility_of_element_located(ARPRWL.BUTTON_TO_LOGIN))
+        driver.find_element(*ARPRWL.FIELD_FOR_ENTRY_NAME).send_keys(random_name)
+        driver.find_element(*ARPRWL.FIELD_FOR_ENTRY_PASSWORD).send_keys(random_password[:5])
+        driver.find_element(*ARPRWL.BUTTON_TO_LOGIN).click()
+        WDW(driver, wait_timer).until(EC.visibility_of_element_located(HL.LOGO))
+        driver.find_element(*HL.LOGO).click()
+        WDW(driver, wait_timer).until(EC.visibility_of_element_located(CL.TITLE_ASSEMBLE_THE_BURGER))
+        assert driver.find_element(*CL.BUTTON_PLACE_AN_ORDER).get_attribute('innerText') == "Войти в аккаунт"
 
-    def test_registration_incorrect_password_flag (self, driver, wait_timer, random_name, random_password, button_to_personal_account_in_header, field_for_entry_name, field_for_entry_password, button_to_registration_in_authorization_window, button_of_registration_in_registration_window, flag_of_incorrect_password_in_registration_window):
-        driver.find_element(By.XPATH, button_to_personal_account_in_header).click()
-        WDW(driver, wait_timer).until(EC.visibility_of_element_located((By.XPATH, button_to_registration_in_authorization_window)))
-        driver.find_element(By.XPATH, button_to_registration_in_authorization_window).click()
-        WDW(driver, wait_timer).until(EC.visibility_of_element_located((By.XPATH, button_of_registration_in_registration_window)))
-        names=driver.find_elements(By.XPATH, field_for_entry_name)
+    def test_registration_incorrect_password_flag (self, driver, wait_timer, random_name, random_password):
+        WDW(driver, wait_timer).until(EC.visibility_of_element_located(HL.BUTTON_TO_PERSONAL_ACCOUNT))
+        driver.find_element(*HL.BUTTON_TO_PERSONAL_ACCOUNT).click()
+        WDW(driver, wait_timer).until(EC.visibility_of_element_located(ARPRWL.BUTTON_PASS_TO_REGISTRATION))
+        driver.find_element(*ARPRWL.BUTTON_PASS_TO_REGISTRATION).click()
+        WDW(driver, wait_timer).until(EC.visibility_of_element_located(ARPRWL.BUTTON_TO_REGISTRATION))
+        names = driver.find_elements(*ARPRWL.FIELD_FOR_ENTRY_NAME)
         names[0].send_keys(random_name[:random_name.find('@')])
         names[1].send_keys(random_name)
-        driver.find_element(By.XPATH, field_for_entry_password).send_keys(random_password[:5])
-        driver.find_element(By.XPATH, button_of_registration_in_registration_window).click()
-        time.sleep(1)
-        WDW(driver, wait_timer).until(EC.visibility_of_element_located((By.XPATH, flag_of_incorrect_password_in_registration_window)))
-        assert driver.find_element(By.XPATH, flag_of_incorrect_password_in_registration_window).get_attribute('innerText') == "Некорректный пароль"
-        driver.quit()
+        driver.find_element(*ARPRWL.FIELD_FOR_ENTRY_PASSWORD).send_keys(random_password[:5])
+        driver.find_element(*ARPRWL.BUTTON_TO_REGISTRATION).click()
+        WDW(driver, wait_timer).until(EC.visibility_of_element_located(ARPRWL.FLAG_OF_INCORRECT_PASSWORD))
+        assert driver.find_element(*ARPRWL.FLAG_OF_INCORRECT_PASSWORD).get_attribute('innerText') == "Некорректный пароль"

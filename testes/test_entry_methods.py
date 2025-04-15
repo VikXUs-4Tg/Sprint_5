@@ -1,62 +1,63 @@
-from selenium.webdriver.common.by import By
 from selenium.webdriver.support.wait import WebDriverWait as WDW
 from selenium.webdriver.support import expected_conditions as EC
-import time
+from locators import HeaderLocators as HL
+from locators import AuthorizationRegistrationAndPasswordRecoveryWindowsLocators as ARPRWL
+from locators import ConstructorLocators as CL
 
 class TestEntryToPersonalAccount:
 
-    def test_entry_to_personal_account_by_click_button_personal_account(self, driver, wait_timer, authorized_name, authorized_password, logo_in_header, button_login_in_authorization_window, button_place_an_order_in_constructor, title_assemble_the_burger_in_constructor, field_for_entry_name, field_for_entry_password, button_to_personal_account_in_header):
-        driver.find_element(By.XPATH, button_to_personal_account_in_header).click()
-        WDW(driver, wait_timer).until(EC.visibility_of_element_located((By.XPATH, button_login_in_authorization_window)))
-        driver.find_element(By.XPATH, field_for_entry_name).send_keys(authorized_name)
-        driver.find_element(By.XPATH, field_for_entry_password).send_keys(authorized_password)
-        driver.find_element(By.XPATH, button_login_in_authorization_window).click()
-        time.sleep(1)
-        driver.find_element(By.XPATH, logo_in_header).click()
-        WDW(driver, wait_timer).until(EC.visibility_of_element_located((By.XPATH, title_assemble_the_burger_in_constructor)))
-        assert driver.find_element(By.XPATH, button_place_an_order_in_constructor).get_attribute('innerText') == "Оформить заказ"
-        driver.quit()
+    def test_entry_to_personal_account_by_click_button_personal_account(self, driver, wait_timer, authorized_name, authorized_password):
+        WDW(driver, wait_timer).until(EC.visibility_of_element_located(HL.BUTTON_TO_PERSONAL_ACCOUNT))
+        driver.find_element(*HL.BUTTON_TO_PERSONAL_ACCOUNT).click()
+        WDW(driver, wait_timer).until(EC.visibility_of_element_located(ARPRWL.BUTTON_TO_LOGIN))
+        driver.find_element(*ARPRWL.FIELD_FOR_ENTRY_NAME).send_keys(authorized_name)
+        driver.find_element(*ARPRWL.FIELD_FOR_ENTRY_PASSWORD).send_keys(authorized_password)
+        driver.find_element(*ARPRWL.BUTTON_TO_LOGIN).click()
+        WDW(driver, wait_timer).until(EC.visibility_of_element_located(HL.LOGO))
+        driver.find_element(*HL.LOGO).click()
+        WDW(driver, wait_timer).until(EC.visibility_of_element_located(CL.TITLE_ASSEMBLE_THE_BURGER))
+        assert driver.find_element(*CL.BUTTON_PLACE_AN_ORDER).get_attribute('innerText') == "Оформить заказ"
 
-    def test_entry_to_personal_account_by_click_button_entry_to_account(self, driver, wait_timer, authorized_name, authorized_password, logo_in_header, button_login_in_authorization_window, button_place_an_order_in_constructor, title_assemble_the_burger_in_constructor, field_for_entry_name, field_for_entry_password):
-        driver.find_element(By.XPATH, button_place_an_order_in_constructor).click()
-        WDW(driver, wait_timer).until(EC.visibility_of_element_located((By.XPATH, button_login_in_authorization_window)))
-        driver.find_element(By.XPATH, field_for_entry_name).send_keys(authorized_name)
-        driver.find_element(By.XPATH, field_for_entry_password).send_keys(authorized_password)
-        driver.find_element(By.XPATH, button_login_in_authorization_window).click()
-        time.sleep(1)
-        driver.find_element(By.XPATH, logo_in_header).click()
-        WDW(driver, wait_timer).until(EC.visibility_of_element_located((By.XPATH, title_assemble_the_burger_in_constructor)))
-        assert driver.find_element(By.XPATH, button_place_an_order_in_constructor).get_attribute('innerText') == "Оформить заказ"
-        driver.quit()
+    def test_entry_to_personal_account_by_click_button_entry_to_account(self, driver, wait_timer, authorized_name, authorized_password):
+        WDW(driver, wait_timer).until(EC.visibility_of_element_located(CL.BUTTON_PLACE_AN_ORDER))
+        driver.find_element(*CL.BUTTON_PLACE_AN_ORDER).click()
+        WDW(driver, wait_timer).until(EC.visibility_of_element_located(ARPRWL.BUTTON_TO_LOGIN))
+        driver.find_element(*ARPRWL.FIELD_FOR_ENTRY_NAME).send_keys(authorized_name)
+        driver.find_element(*ARPRWL.FIELD_FOR_ENTRY_PASSWORD).send_keys(authorized_password)
+        driver.find_element(*ARPRWL.BUTTON_TO_LOGIN).click()
+        WDW(driver, wait_timer).until(EC.visibility_of_element_located(HL.LOGO))
+        driver.find_element(*HL.LOGO).click()
+        WDW(driver, wait_timer).until(EC.visibility_of_element_located(CL.TITLE_ASSEMBLE_THE_BURGER))
+        assert driver.find_element(*CL.BUTTON_PLACE_AN_ORDER).get_attribute('innerText') == "Оформить заказ"
 
-    def test_entry_to_personal_account_by_click_button_enter_in_form_of_registration (self, driver, wait_timer, authorized_name, authorized_password, logo_in_header, button_login_in_authorization_window, button_place_an_order_in_constructor, title_assemble_the_burger_in_constructor, field_for_entry_name, field_for_entry_password, button_to_personal_account_in_header, button_login_in_registration_and_password_recovery_windows, button_to_registration_in_authorization_window):
-        driver.find_element(By.XPATH, button_to_personal_account_in_header).click()
-        WDW(driver, wait_timer).until(EC.visibility_of_element_located((By.XPATH, button_login_in_authorization_window)))
-        driver.find_element(By.XPATH, button_to_registration_in_authorization_window).click()
-        WDW(driver, wait_timer).until(EC.visibility_of_element_located((By.XPATH, button_login_in_registration_and_password_recovery_windows)))
-        driver.find_element(By.XPATH, button_login_in_registration_and_password_recovery_windows).click()
-        WDW(driver, wait_timer).until(EC.visibility_of_element_located((By.XPATH, button_login_in_authorization_window)))
-        driver.find_element(By.XPATH, field_for_entry_name).send_keys(authorized_name)
-        driver.find_element(By.XPATH, field_for_entry_password).send_keys(authorized_password)
-        driver.find_element(By.XPATH, button_login_in_authorization_window).click()
-        time.sleep(1)
-        driver.find_element(By.XPATH, logo_in_header).click()
-        WDW(driver, wait_timer).until(EC.visibility_of_element_located((By.XPATH, title_assemble_the_burger_in_constructor)))
-        assert driver.find_element(By.XPATH, button_place_an_order_in_constructor).get_attribute('innerText') == "Оформить заказ"
-        driver.quit()
+    def test_entry_to_personal_account_by_click_button_enter_in_form_of_registration (self, driver, wait_timer, authorized_name, authorized_password):
+        WDW(driver, wait_timer).until(EC.visibility_of_element_located(HL.BUTTON_TO_PERSONAL_ACCOUNT))
+        driver.find_element(*HL.BUTTON_TO_PERSONAL_ACCOUNT).click()
+        WDW(driver, wait_timer).until(EC.visibility_of_element_located(ARPRWL.BUTTON_PASS_TO_REGISTRATION))
+        driver.find_element(*ARPRWL.BUTTON_PASS_TO_REGISTRATION).click()
+        WDW(driver, wait_timer).until(EC.visibility_of_element_located(ARPRWL.BUTTON_PASS_TO_LOGIN))
+        driver.find_element(*ARPRWL.BUTTON_PASS_TO_LOGIN).click()
+        WDW(driver, wait_timer).until(EC.visibility_of_element_located(ARPRWL.BUTTON_TO_LOGIN))
+        driver.find_element(*ARPRWL.FIELD_FOR_ENTRY_NAME).send_keys(authorized_name)
+        driver.find_element(*ARPRWL.FIELD_FOR_ENTRY_PASSWORD).send_keys(authorized_password)
+        driver.find_element(*ARPRWL.BUTTON_TO_LOGIN).click()
+        WDW(driver, wait_timer).until(EC.visibility_of_element_located(HL.LOGO))
+        driver.find_element(*HL.LOGO).click()
+        WDW(driver, wait_timer).until(EC.visibility_of_element_located(CL.TITLE_ASSEMBLE_THE_BURGER))
+        assert driver.find_element(*CL.BUTTON_PLACE_AN_ORDER).get_attribute('innerText') == "Оформить заказ"
 
-    def test_entry_to_personal_account_by_click_button_enter_in_password_recovery_form(self, driver, wait_timer, authorized_name, authorized_password, logo_in_header, button_login_in_authorization_window, button_place_an_order_in_constructor, title_assemble_the_burger_in_constructor, field_for_entry_name, field_for_entry_password, button_to_personal_account_in_header, button_login_in_registration_and_password_recovery_windows, button_to_password_recovery_in_authorization_window):
-        driver.find_element(By.XPATH, button_to_personal_account_in_header).click()
-        WDW(driver, wait_timer).until(EC.visibility_of_element_located((By.XPATH, button_login_in_authorization_window)))
-        driver.find_element(By.XPATH, button_to_password_recovery_in_authorization_window).click()
-        WDW(driver, wait_timer).until(EC.visibility_of_element_located((By.XPATH, button_login_in_registration_and_password_recovery_windows)))
-        driver.find_element(By.XPATH, button_login_in_registration_and_password_recovery_windows).click()
-        WDW(driver, wait_timer).until(EC.visibility_of_element_located((By.XPATH, button_login_in_authorization_window)))
-        driver.find_element(By.XPATH, field_for_entry_name).send_keys(authorized_name)
-        driver.find_element(By.XPATH, field_for_entry_password).send_keys(authorized_password)
-        driver.find_element(By.XPATH, button_login_in_authorization_window).click()
-        time.sleep(1)
-        driver.find_element(By.XPATH, logo_in_header).click()
-        WDW(driver, wait_timer).until(EC.visibility_of_element_located((By.XPATH, title_assemble_the_burger_in_constructor)))
-        assert driver.find_element(By.XPATH, button_place_an_order_in_constructor).get_attribute('innerText') == "Оформить заказ"
-        driver.quit()
+    def test_entry_to_personal_account_by_click_button_enter_in_password_recovery_form(self, driver, wait_timer, authorized_name, authorized_password):
+        WDW(driver, wait_timer).until(EC.visibility_of_element_located(HL.BUTTON_TO_PERSONAL_ACCOUNT))
+        driver.find_element(*HL.BUTTON_TO_PERSONAL_ACCOUNT).click()
+        WDW(driver, wait_timer).until(EC.visibility_of_element_located(ARPRWL.BUTTON_PASS_TO_PASSWORD_RECOVERY))
+        driver.find_element(*ARPRWL.BUTTON_PASS_TO_PASSWORD_RECOVERY).click()
+        WDW(driver, wait_timer).until(EC.visibility_of_element_located(ARPRWL.BUTTON_PASS_TO_LOGIN))
+        driver.find_element(*ARPRWL.BUTTON_PASS_TO_LOGIN).click()
+        WDW(driver, wait_timer).until(EC.visibility_of_element_located(ARPRWL.BUTTON_TO_LOGIN))
+        driver.find_element(*ARPRWL.FIELD_FOR_ENTRY_NAME).send_keys(authorized_name)
+        driver.find_element(*ARPRWL.FIELD_FOR_ENTRY_PASSWORD).send_keys(authorized_password)
+        driver.find_element(*ARPRWL.BUTTON_TO_LOGIN).click()
+        WDW(driver, wait_timer).until(EC.visibility_of_element_located(HL.LOGO))
+        driver.find_element(*HL.LOGO).click()
+        WDW(driver, wait_timer).until(EC.visibility_of_element_located(CL.TITLE_ASSEMBLE_THE_BURGER))
+        assert driver.find_element(*CL.BUTTON_PLACE_AN_ORDER).get_attribute('innerText') == "Оформить заказ"
