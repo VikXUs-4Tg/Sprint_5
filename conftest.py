@@ -9,7 +9,7 @@ from locators import AuthorizationRegistrationAndPasswordRecoveryWindowsLocators
 @pytest.fixture(scope='function')
 def driver():
     chrome_options = webdriver.ChromeOptions()
-    #chrome_options.add_argument('--headless')
+    chrome_options.add_argument('--headless')
     chrome_options.add_argument('--window-size=1024,768')
     driver = webdriver.Chrome(options=chrome_options)
     driver.get(const['webpage'])

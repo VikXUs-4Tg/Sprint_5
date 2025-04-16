@@ -33,5 +33,3 @@ control_words = {
 'lighthouse_in_constructor' : 'Соберите бургер',
 'lighthouse_in_personal_account' : 'В этом разделе вы можете изменить свои персональные данные'
 }
-
-position = {'x': 0, 'y': 244}
